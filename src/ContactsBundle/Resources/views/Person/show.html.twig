@@ -3,5 +3,21 @@
 {% block body %}
     <p>{{ person.firstName }} {{ person.lastName }}</p>
     <p>{{ person.description }}</p>
+    <h3>Adres:</h3>
+    {% for address in person.addresses %}
+        <p>{{ address.city }}</p>
+        <p>
+            ul. {{address.street}} {{address.house}}{%if address.flat is defined%}/{{address.flat}}{% endif %}
+        </p>
+    {% endfor %}
+    <h3>Telefon:</h3>
+    {% for phone in person.phones %}
+        <p>{{ phone.number }} - {{ phone.type }}</p>
+    {% endfor %}
+    <h3>Email:</h3>
+    {% for email in person.emails %}
+        <p>{{ email.email }} - {{ email.type }}</p>
+    {% endfor %}
+
     <a href="{{ path('modify', {'id': person.id}) }}">Zmień lub uzupełnij dane</a>
 {% endblock %}

@@ -216,38 +216,4 @@ class Person
     {
         return $this->phones;
     }
-
-    /**
-     * Add email
-     *
-     * @param \ContactsBundle\Entity\Email $email
-     *
-     * @return Person
-     */
-    public function addEmail(\ContactsBundle\Entity\Email $email)
-    {
-        $this->emails[] = $email;
-
-        return $this;
-    }
-
-    /**
-     * Remove email
-     *
-     * @param \ContactsBundle\Entity\Email $email
-     */
-    public function removeEmail(\ContactsBundle\Entity\Email $email)
-    {
-        $this->emails->removeElement($email);
-    }
-
-    /**
-     * Get emails
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEmails()
-    {
-        return $this->emails;
-    }
 }

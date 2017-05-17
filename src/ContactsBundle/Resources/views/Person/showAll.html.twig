@@ -1,0 +1,9 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    <ul>
+        {% for person in persons %}
+            <li>{{ include('ContactsBundle:Person:show.html.twig',{ 'person': person}) }}</li>
+         {% endfor %}
+    </ul>
+{% endblock %}

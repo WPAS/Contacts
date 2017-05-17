@@ -13,7 +13,7 @@ class PersonRepository extends \Doctrine\ORM\EntityRepository
     public function getAlphabetically()
     {
    	$persons = $this->getEntityManager()->createQuery(
-		'SELECT p FROM ContactsBundle:Person p ORDER BY p.lastName DESC')
+		'SELECT p FROM ContactsBundle:Person p ORDER BY p.lastName ASC')
 		->getResult();
 	return $persons;
     }

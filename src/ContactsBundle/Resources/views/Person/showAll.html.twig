@@ -3,7 +3,11 @@
 {% block body %}
     <ul>
         {% for person in persons %}
-            <li>{{ include('ContactsBundle:Person:show.html.twig',{ 'person': person}) }}</li>
+            <li><a href="{{ path('show', {'id': person.id}) }}">{{ person.firstName }}<a/> {{person.lastName}}
+                <a href="{{ path('modify', {'id': person.id}) }}">Zmień dane</a>
+                <a href="{{ path('delete', {'id': person.id}) }}">Usuń osobę</a>
+            </li>
          {% endfor %}
     </ul>
+    <a href="{{ path('new') }}">Dodaj nową osobę</a>
 {% endblock %}

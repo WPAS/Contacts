@@ -1,7 +1,7 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
-    {{ person.firstName }}
-    {{ person.lastName }}
-    {{ person.description }}
+    <p>{{ person.firstName }} {{ person.lastName }}</p>
+    <p>{{ person.description }}</p>
+    <a href="{{ path('modify', {'id': person.id}) }}">Zmień lub uzupełnij dane</a>
 {% endblock %}

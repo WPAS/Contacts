@@ -12,7 +12,7 @@ use ContactsBundle\Entity\Person;
 class PersonController extends Controller
 {
     /**
-     * @Route("/new")
+     * @Route("/new", name="new")
      */
     public function newAction(Request $request)
     {
@@ -32,7 +32,7 @@ class PersonController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($person);
             $em->flush();            
-            return new Response ("Dodałeś nową osobę");
+            return $this->redirect($this->generateUrl('show', [ 'id' => $person->getId() ] ));
         }
         
         return $this->render('ContactsBundle:Person:create.html.twig', array(
@@ -42,7 +42,7 @@ class PersonController extends Controller
     }
     
     /**
-     * @Route("/{id}/modify")
+     * @Route("/{id}/modify", name="modify")
     */
     public function modifyAction(Request $request, $id)
     {
@@ -75,7 +75,7 @@ class PersonController extends Controller
     }
     
     /**
-     * @Route("/{id}/delete")
+     * @Route("/{id}/delete", name="delete")
     */
     public function deleteAction($id)
     {
@@ -91,7 +91,7 @@ class PersonController extends Controller
     }
     
     /**
-    * @Route("/{id}")
+    * @Route("/{id}", name="show")
     */
     public function show($id)
     {

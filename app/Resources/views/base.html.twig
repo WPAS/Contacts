@@ -3,18 +3,24 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Kontakty{% endblock %}</title>
-        {% block stylesheets %}<link rel=stylesheet" href="{{ asset('foundation.min.css') }}"/>{% endblock %}              
+        {% block stylesheets %}<link rel="stylesheet" href="{{ asset('foundation.min.css') }}"/>{% endblock %}              
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% block flash %}
         {% endblock %}
         {% block header %}
-            <h1>Moje kontakty</h1>
+            <div class="row">
+                <div class="small-6 small-offset-3 columns">
+                    <h1 class="text-center">Moje kontakty</h1>
+                </div>
+            </div>
         {% endblock %}
         {% block body %}
             {% block nav %}
-                <a href="{{ path('index') }}">Wszystkie kontakty</a>
+                <nav class="top-bar">
+                    <a href="{{ path('index') }}">Wszystkie kontakty</a>
+                </nav>
             {% endblock %}
         {% endblock %}
         {% block javascripts %}{% endblock %}

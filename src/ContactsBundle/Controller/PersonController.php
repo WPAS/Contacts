@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 use ContactsBundle\Entity\Person;
 use ContactsBundle\Entity\Address;
 use ContactsBundle\Entity\Phone;

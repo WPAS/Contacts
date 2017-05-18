@@ -2,25 +2,28 @@
 
 {% block body %}
     {{ parent() }}
-    <div>
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        {{ form_end(form) }}
-    <div>
-    <div>
-        {{ form_start(addressForm) }}
-        {{ form_widget(addressForm) }}
-        {{ form_end(addressForm) }}
-    <div>
-    <div>
-        {{ form_start(phoneForm) }}
-        {{ form_widget(phoneForm) }}
-        {{ form_end(phoneForm) }}
-    <div>
-    <div>
-        {{ form_start(emailForm) }}
-        {{ form_widget(emailForm) }}
-        {{ form_end(emailForm) }}
-    <div>
-
+    <div class="row">
+        <div class="small-6 small-offset-3 columns">
+            <div>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            <div>
+            <div>
+                {{ form_start(addressForm) }}
+                {{ form_widget(addressForm) }}
+                {{ form_end(addressForm) }}
+            <div>
+            <div>
+                {{ form_start(phoneForm) }}
+                {{ form_widget(phoneForm) }}
+                {{ form_end(phoneForm) }}
+            <div>
+            <div>
+                {{ form_start(emailForm) }}
+                {{ form_widget(emailForm) }}
+                {{ form_end(emailForm) }}
+            <div>
+        </div>
+    </div>
 {% endblock %}

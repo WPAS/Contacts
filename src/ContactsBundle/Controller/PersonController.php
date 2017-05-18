@@ -84,8 +84,11 @@ class PersonController extends Controller
             $person = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($person);
-            $em->flush();            
-            return new Response ("Dane osoby zostały zmienione");
+            $em->flush();
+    
+            $this->addFlash('notice', 'Pomyślnie zmieniono dane osoby');
+        
+            return $this->redirectToRoute('show', array('id' => $id));                    
         }
         
         $address = new Address();

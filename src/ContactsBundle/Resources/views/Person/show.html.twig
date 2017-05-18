@@ -7,7 +7,7 @@
             <h3>{{ person.firstName }} {{ person.lastName }}</h3>
             <p>
                 {% for group in person.groups %}
-                    {{ group.name }}
+                    <a href="{{ path('group', {'id': group.id }) }}">{{ group.name }}</a>
                 {% else %}
                     Nie należy do żadnej grupy
                 {% endfor %}

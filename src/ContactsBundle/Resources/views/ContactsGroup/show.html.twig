@@ -2,14 +2,31 @@
 
 {% block body %}
     {{ parent() }}
-    <div class="row text-center">
-        <div class="small-8 small-offset-2 columns">
+    <div class="row">
+        <div class="small-8 small-offset-2 columns text-center">
             <h3>{{ group.name }}</h3>
-            {% for person in group.persons %}
-                <div>
-                    <h5><a href="{{ path('show', {'id': person.id}) }}">{{ person.firstName }}</a> {{person.lastName}}</h5>
-                </div> 
-            {% endfor %}
         </div>
     </div>
+    <ul class="no-bullet">
+       {% for person in group.persons %}
+        <li class="row">    
+            <div class="text-left small-8 small-offset-2 columns">
+                <h5 class="small-6 columns"><a href="{{ path('show', {'id': person.id}) }}">{{ person.firstName }}</a> {{person.lastName}}</h5>
+                <div class="text-right">
+                    <a href="{{ path('removePerson', {'id': group.id, 'personId': person.id}) }}" class="button small alert text-right">Usuń osobę</a>
+                <div>
+            </div>
+        </li>
+        {% endfor %}
+    <div class="row">
+        <div class="small-6 small-offset-3 columns">
+            <a href="{{ path('changeName', {'id': group.id}) }}" class="button large hollow expanded">Zmień nazwę grupy</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-6 small-offset-3 columns">
+            <a href="{{ path('deleteGroup', {'id': group.id}) }}" class="button large hollow alert expanded">Usuń grupę</a>
+        </div>
+    </div>
+
 {% endblock %}

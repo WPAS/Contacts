@@ -14,7 +14,7 @@
             <div class="row">
                 <li class="small-8 small-offset-2 columns">
                     <div class="large-4 columns">
-                        <h5 class="large-text-left"><a href="{{ path('show', {'id': person.id}) }}">{{ person.firstName }}</a> {{person.lastName}}</h5>
+                        <h5 class="large-text-left">{{person.lastName}} <a href="{{ path('show', {'id': person.id}) }}">{{ person.firstName }}</a></h5>
                     </div>
                     <div class="large-4 columns">
                         <a href="{{ path('modify', {'id': person.id}) }}" class="button small warning">Zmień dane</a>

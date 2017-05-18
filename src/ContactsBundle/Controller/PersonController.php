@@ -201,6 +201,8 @@ class PersonController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->persist($address);
         $em->flush();            
+        $this->addFlash('notice', 'Pomyślnie zmieniono dane osoby');
+
         return $this->redirect($this->generateUrl('show', [ 'id' => $id ]));
         
     }
@@ -229,6 +231,9 @@ class PersonController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->persist($phone);
         $em->flush();            
+        
+        $this->addFlash('notice', 'Pomyślnie zmieniono dane osoby');
+
         return $this->redirect($this->generateUrl('show', [ 'id' => $id ]));
         
     }
@@ -256,7 +261,10 @@ class PersonController extends Controller
         $email->setPerson($person);
         $em = $this->getDoctrine()->getManager();
         $em->persist($email);
-        $em->flush();            
+        $em->flush();           
+
+        $this->addFlash('notice', 'Pomyślnie zmieniono dane osoby');
+
         return $this->redirect($this->generateUrl('show', [ 'id' => $id ]));
         
     }

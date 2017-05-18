@@ -1,5 +1,12 @@
 {% extends "::base.html.twig" %}
 
+{% block flash %}
+    {% for flashMessage in app.session.flashBag.get('notice') %}
+        <div class="flash-notice button large expanded success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+{% endblock %}
 {% block body %}
     {{ parent() }}
     <div class="row">

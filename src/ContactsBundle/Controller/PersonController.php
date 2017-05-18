@@ -14,6 +14,7 @@ use ContactsBundle\Entity\Person;
 use ContactsBundle\Entity\Address;
 use ContactsBundle\Entity\Phone;
 use ContactsBundle\Entity\Email;
+use ContactsBundle\Entity\Group;
 
 class PersonController extends Controller
 {
@@ -28,6 +29,12 @@ class PersonController extends Controller
                 ->add("firstName", "text")
                 ->add("lastName", "text")
                 ->add("description", "textarea")
+                ->add("groups", "entity", array(
+                    'class' => 'ContactsBundle:ContactsGroup',
+                    'choice_label' => 'name',
+                    'multiple' => 'true',
+                    'by_reference' => false
+                ))
                 ->add("save", "submit", array("label"=>"Dodaj osobę"))
                 ->getForm();
         
@@ -62,6 +69,12 @@ class PersonController extends Controller
                 ->add("firstName", "text")
                 ->add("lastName", "text")
                 ->add("description", "textarea")
+                ->add("groups", "entity", array(
+                    'class' => 'ContactsBundle:ContactsGroup',
+                    'choice_label' => 'name',
+                    'multiple' => 'true',
+                    'by_reference' => false
+                ))
                 ->add("save", "submit", array("label"=>"Zapisz nowe dane"))
                 ->getForm();        
       

@@ -8,6 +8,7 @@
     {% endfor %}
 {% endblock %}
 {% block body %}
+    {{ parent() }}
     <ul class="no-bullet text-center">
         {% for person in persons %}
             <div class="row">

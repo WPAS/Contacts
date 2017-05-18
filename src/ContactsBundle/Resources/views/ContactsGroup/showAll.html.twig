@@ -1,0 +1,20 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    {{ parent() }}
+    <ul class="no-bullet">
+    {% for group in groups %}
+        <li class="row">
+            <div class="small-6 small-offset-3 columns">
+                <a href="{{ path('group', {'id': group.id})}}" class="button large secondary expanded">
+                   <h2>{{ group.name }}</h2>
+                </a>
+            </div>
+        </li>        
+    {% endfor %}
+    <div class="row">
+        <div class="small-6 small-offset-3 columns">
+            <a href="{{ path('new_group') }}" class="button large expanded">Dodaj nową grupę</a>
+        </div>
+    </div>
+{% endblock %}

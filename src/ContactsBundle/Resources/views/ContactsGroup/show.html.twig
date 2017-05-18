@@ -1,0 +1,15 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="row text-center">
+        <div class="small-8 small-offset-2 columns">
+            <h3>{{ group.name }}</h3>
+            {% for person in group.persons %}
+                <div>
+                    <h5><a href="{{ path('show', {'id': person.id}) }}">{{ person.firstName }}</a> {{person.lastName}}</h5>
+                </div> 
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

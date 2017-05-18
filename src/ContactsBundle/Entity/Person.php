@@ -2,6 +2,7 @@
 
 namespace ContactsBundle\Entity;
 
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -57,6 +58,12 @@ class Person
      * @ORM\OneToMany(targetEntity="Email", mappedBy="person", cascade={"persist", "remove"})
      */
     private $emails;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="ContactsGroup", mappedBy="persons")
+     * @ORM\JoinTable(name="contacts_group_person")
+     */
+    private $groups;
 
 
     /**
@@ -147,6 +154,7 @@ class Person
         $this->comments = new ArrayCollection();
         $this->phones = new ArrayCollection();
         $this->emails = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     /**
@@ -249,5 +257,40 @@ class Person
     public function getEmails()
     {
         return $this->emails;
+    }
+
+    /**
+     * Add group
+     *
+     * @param \ContactsBundle\Entity\ContactsGroup $group
+     *
+     * @return Person
+     */
+    public function addGroup(\ContactsBundle\Entity\ContactsGroup $group)
+    {
+        $group->addPerson($this);
+        $this->groups[] = $group;
+
+        return $this;
+    }
+
+    /**
+     * Remove group
+     *
+     * @param \ContactsBundle\Entity\ContactsGroup $group
+     */
+    public function removeGroup(\ContactsBundle\Entity\ContactsGroup $group)
+    {
+        $this->groups->removeElement($group);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 }

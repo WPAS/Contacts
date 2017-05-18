@@ -5,7 +5,14 @@
     <div class="row">
         <div class="small-8 small-offset-2 columns">
             <h3>{{ person.firstName }} {{ person.lastName }}</h3>
-            <p>{{ person.description }}</p>
+            <p>
+                {% for group in person.groups %}
+                    {{ group.name }}
+                {% else %}
+                    Nie należy do żadnej grupy
+                {% endfor %}
+                <p>{{ person.description }}</p>
+            </p>
             <h5>Adres:</h5>
             {% for address in person.addresses %}
                 <div class="small-7 columns">

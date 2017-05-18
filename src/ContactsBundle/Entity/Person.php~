@@ -2,6 +2,8 @@
 
 namespace ContactsBundle\Entity;
 
+use ContactsBundle\Entity\Group;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -44,19 +46,24 @@ class Person
     private $description;
     
     /**
-     * @ORM\OneToMany(targetEntity="Address", mappedBy="person")
+     * @ORM\OneToMany(targetEntity="Address", mappedBy="person", cascade={"persist", "remove"})
      */
     private $addresses;
     
     /**
-     * @ORM\OneToMany(targetEntity="Phone", mappedBy="person")
+     * @ORM\OneToMany(targetEntity="Phone", mappedBy="person", cascade={"persist", "remove"})
      */
     private $phones;
 
     /**
-     * @ORM\OneToMany(targetEntity="Email", mappedBy="person")
+     * @ORM\OneToMany(targetEntity="Email", mappedBy="person", cascade={"persist", "remove"})
      */
     private $emails;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="ContactsGroup", mappedBy="persons")
+     */
+    private $groups;
 
 
     /**
@@ -147,6 +154,7 @@ class Person
         $this->comments = new ArrayCollection();
         $this->phones = new ArrayCollection();
         $this->emails = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     /**
@@ -215,5 +223,73 @@ class Person
     public function getPhones()
     {
         return $this->phones;
+    }
+
+    /**
+     * Add email
+     *
+     * @param \ContactsBundle\Entity\Email $email
+     *
+     * @return Person
+     */
+    public function addEmail(\ContactsBundle\Entity\Email $email)
+    {
+        $this->emails[] = $email;
+
+        return $this;
+    }
+
+    /**
+     * Remove email
+     *
+     * @param \ContactsBundle\Entity\Email $email
+     */
+    public function removeEmail(\ContactsBundle\Entity\Email $email)
+    {
+        $this->emails->removeElement($email);
+    }
+
+    /**
+     * Get emails
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEmails()
+    {
+        return $this->emails;
+    }
+
+    /**
+     * Add group
+     *
+     * @param \ContactsBundle\Entity\ContactsGroup $group
+     *
+     * @return Person
+     */
+    public function addGroup(\ContactsBundle\Entity\ContactsGroup $group)
+    {
+        $this->groups[] = $group;
+
+        return $this;
+    }
+
+    /**
+     * Remove group
+     *
+     * @param \ContactsBundle\Entity\ContactsGroup $group
+     */
+    public function removeGroup(\ContactsBundle\Entity\ContactsGroup $group)
+    {
+        $this->groups->removeElement($group);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGroups()
+    {
+        return $this->groups;
     }
 }

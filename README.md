@@ -1,4 +1,4 @@
 contacts
 ========
 
-A Symfony project created on May 17, 2017, 10:50 am.
+A simple app made to practice Symfony framework. Foundation was also used to add a few styles although styling is far from finished.

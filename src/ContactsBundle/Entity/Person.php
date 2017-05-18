@@ -44,17 +44,17 @@ class Person
     private $description;
     
     /**
-     * @ORM\OneToMany(targetEntity="Address", mappedBy="person")
+     * @ORM\OneToMany(targetEntity="Address", mappedBy="person", cascade={"persist", "remove"})
      */
     private $addresses;
     
     /**
-     * @ORM\OneToMany(targetEntity="Phone", mappedBy="person")
+     * @ORM\OneToMany(targetEntity="Phone", mappedBy="person", cascade={"persist", "remove"})
      */
     private $phones;
 
     /**
-     * @ORM\OneToMany(targetEntity="Email", mappedBy="person")
+     * @ORM\OneToMany(targetEntity="Email", mappedBy="person", cascade={"persist", "remove"})
      */
     private $emails;
 

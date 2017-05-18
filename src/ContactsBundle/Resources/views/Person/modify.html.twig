@@ -1,6 +1,7 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
+    {{ parent() }}
     <div>
         {{ form_start(form) }}
         {{ form_widget(form) }}

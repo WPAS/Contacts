@@ -80,7 +80,7 @@ class PersonController extends Controller
                 ->add("city", "text")
                 ->add("street", "text")
                 ->add("house", "text")
-                ->add("flat", "text")
+                ->add("flat", "text", array("required" => false))
                 ->add("saveAddress", "submit", array("label"=>"Dodaj adres"))
                 ->getForm();
         
@@ -123,7 +123,10 @@ class PersonController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($person);
         $em->flush();
-        return new Response('Pomyślnie usunięto osobę');
+        
+        $this->addFlash('notice', 'Pomyślnie usunięto osobę');
+        
+        return $this->redirectToRoute('index');        
     }
     
     /**
@@ -141,7 +144,7 @@ class PersonController extends Controller
     }
 
     /**
-     * @Route("/")
+     * @Route("/", name="index")
      */
     public function all()
     {
@@ -238,6 +241,63 @@ class PersonController extends Controller
         $em->flush();            
         return $this->redirect($this->generateUrl('show', [ 'id' => $id ]));
         
+    }
+
+    /**
+     * @Route("/{id}/deletePhone", name="deletePhone")
+    */
+    public function deletePhoneAction($id)
+    {
+        $phoneRepository = $this->getDoctrine()->getRepository('ContactsBundle:Phone');
+        $phone = $phoneRepository->find($id);
+        if (!$phone) {
+            throw new NotFoundHttpException('Nie znaleziono takiego telefonu');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($phone);
+        $em->flush();
+        
+        $this->addFlash('notice', 'Pomyślnie usunięto numer telefonu');
+        
+        return $this->redirectToRoute('index');        
+    }
+
+    /**
+     * @Route("/{id}/deleteAddress", name="deleteAddress")
+    */
+    public function deleteAddressAction($id)
+    {
+        $addressRepository = $this->getDoctrine()->getRepository('ContactsBundle:Address');
+        $address = $addressRepository->find($id);
+        if (!$address) {
+            throw new NotFoundHttpException('Nie znaleziono takiego adresu');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($address);
+        $em->flush();
+
+        $this->addFlash('notice', 'Pomyślnie usunięto adres');
+        
+        return $this->redirectToRoute('index');        
+    }
+    
+    /**
+     * @Route("/{id}/deleteEmail", name="deleteEmail")
+    */
+    public function deleteEmailAction($id)
+    {
+        $emailRepository = $this->getDoctrine()->getRepository('ContactsBundle:Email');
+        $email = $emailRepository->find($id);
+        if (!$email) {
+            throw new NotFoundHttpException('Nie znaleziono takiego adresu email');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($email);
+        $em->flush();
+        
+        $this->addFlash('notice', 'Pomyślnie usunięto adres email');
+        
+        return $this->redirectToRoute('index');        
     }
     
     

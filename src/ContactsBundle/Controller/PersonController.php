@@ -5,16 +5,15 @@ namespace ContactsBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+use ContactsBundle\Form\PersonType;
 use ContactsBundle\Entity\Person;
 use ContactsBundle\Entity\Address;
 use ContactsBundle\Entity\Phone;
 use ContactsBundle\Entity\Email;
-use ContactsBundle\Entity\Group;
 
 class PersonController extends Controller
 {
@@ -25,18 +24,7 @@ class PersonController extends Controller
     {
         $person = new Person();
         
-        $form = $this->createFormBuilder($person)
-                ->add("firstName", "text")
-                ->add("lastName", "text")
-                ->add("description", "textarea")
-                ->add("groups", "entity", array(
-                    'class' => 'ContactsBundle:ContactsGroup',
-                    'choice_label' => 'name',
-                    'multiple' => 'true',
-                    'by_reference' => false
-                ))
-                ->add("save", "submit", array("label"=>"Dodaj osobę"))
-                ->getForm();
+        $form = $this->createForm(PersonType::class, $person);
         
         $form->handleRequest($request);
         
@@ -65,18 +53,8 @@ class PersonController extends Controller
         if (!$person) {
             throw new NotFoundHttpException('Nie znaleziono takiej osoby');
         }
-        $form = $this->createFormBuilder($person)
-                ->add("firstName", "text")
-                ->add("lastName", "text")
-                ->add("description", "textarea")
-                ->add("groups", "entity", array(
-                    'class' => 'ContactsBundle:ContactsGroup',
-                    'choice_label' => 'name',
-                    'multiple' => 'true',
-                    'by_reference' => false
-                ))
-                ->add("save", "submit", array("label"=>"Zapisz nowe dane"))
-                ->getForm();        
+
+        $form = $this->createForm(PersonType::class, $person);
       
         $form->handleRequest($request);
 
@@ -173,158 +151,5 @@ class PersonController extends Controller
         }
         return $this->render('ContactsBundle:Person:showAll.html.twig', ['persons' => $persons]);
     }
-    
-    
-    /**
-     * @Route("/{id}/addAddress", name="address")
-     * @Method("POST")
-     */
-    public function addAddress(Request $request, $id)
-    {        
-        $address = new Address();
-        $personRepository = $this->getDoctrine()->getRepository('ContactsBundle:Person');
-        $person = $personRepository->find($id);
-
-        $addressForm = $this->createFormBuilder($address)
-                ->setAction($this->generateUrl('address', array('id' => $id)))
-                ->add("city", "text")
-                ->add("street", "text")
-                ->add("house", "text")
-                ->add("flat", "text")
-                ->add("saveAddress", "submit", array("label"=>"Dodaj adres"))
-                ->getForm();
-
-        $addressForm->handleRequest($request);
-        
-        $address = $addressForm->getData();
-        $address->setPerson($person);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($address);
-        $em->flush();            
-        $this->addFlash('notice', 'Pomyślnie zmieniono dane osoby');
-
-        return $this->redirect($this->generateUrl('show', [ 'id' => $id ]));
-        
-    }
-
-    /**
-     * @Route("/{id}/addPhone", name="phone")
-     * @Method("POST")
-     */
-    public function addPhone(Request $request, $id)
-    {        
-        $phone = new Phone();
-        $personRepository = $this->getDoctrine()->getRepository('ContactsBundle:Person');
-        $person = $personRepository->find($id);
-
-        $phoneForm = $this->createFormBuilder($phone)
-                ->setAction($this->generateUrl('phone', array('id' => $id)))
-                ->add("number", "number")
-                ->add("type", "text")
-                ->add("savePhone", "submit", array("label"=>"Dodaj numer telefonu"))
-                ->getForm();
-
-        $phoneForm->handleRequest($request);
-        
-        $phone = $phoneForm->getData();
-        $phone->setPerson($person);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($phone);
-        $em->flush();            
-        
-        $this->addFlash('notice', 'Pomyślnie zmieniono dane osoby');
-
-        return $this->redirect($this->generateUrl('show', [ 'id' => $id ]));
-        
-    }
-
-    /**
-     * @Route("/{id}/addEmail", name="email")
-     * @Method("POST")
-     */
-    public function addEmail(Request $request, $id)
-    {        
-        $email = new Email();
-        $personRepository = $this->getDoctrine()->getRepository('ContactsBundle:Person');
-        $person = $personRepository->find($id);
-
-        $emailForm = $this->createFormBuilder($email)
-                ->setAction($this->generateUrl('email', array('id' => $id)))
-                ->add("email", "email")
-                ->add("type", "text")
-                ->add("saveEmail", "submit", array("label"=>"Dodaj adres email"))
-                ->getForm();
-
-        $emailForm->handleRequest($request);
-        
-        $email = $emailForm->getData();
-        $email->setPerson($person);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($email);
-        $em->flush();           
-
-        $this->addFlash('notice', 'Pomyślnie zmieniono dane osoby');
-
-        return $this->redirect($this->generateUrl('show', [ 'id' => $id ]));
-        
-    }
-
-    /**
-     * @Route("/{id}/deletePhone", name="deletePhone")
-    */
-    public function deletePhoneAction($id)
-    {
-        $phoneRepository = $this->getDoctrine()->getRepository('ContactsBundle:Phone');
-        $phone = $phoneRepository->find($id);
-        if (!$phone) {
-            throw new NotFoundHttpException('Nie znaleziono takiego telefonu');
-        }
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($phone);
-        $em->flush();
-        
-        $this->addFlash('notice', 'Pomyślnie usunięto numer telefonu');
-        
-        return $this->redirectToRoute('index');        
-    }
-
-    /**
-     * @Route("/{id}/deleteAddress", name="deleteAddress")
-    */
-    public function deleteAddressAction($id)
-    {
-        $addressRepository = $this->getDoctrine()->getRepository('ContactsBundle:Address');
-        $address = $addressRepository->find($id);
-        if (!$address) {
-            throw new NotFoundHttpException('Nie znaleziono takiego adresu');
-        }
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($address);
-        $em->flush();
-
-        $this->addFlash('notice', 'Pomyślnie usunięto adres');
-        
-        return $this->redirectToRoute('index');        
-    }
-    
-    /**
-     * @Route("/{id}/deleteEmail", name="deleteEmail")
-    */
-    public function deleteEmailAction($id)
-    {
-        $emailRepository = $this->getDoctrine()->getRepository('ContactsBundle:Email');
-        $email = $emailRepository->find($id);
-        if (!$email) {
-            throw new NotFoundHttpException('Nie znaleziono takiego adresu email');
-        }
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($email);
-        $em->flush();
-        
-        $this->addFlash('notice', 'Pomyślnie usunięto adres email');
-        
-        return $this->redirectToRoute('index');        
-    }
-    
-    
+   
 }

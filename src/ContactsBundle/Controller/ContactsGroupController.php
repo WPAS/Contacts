@@ -146,6 +146,4 @@ class ContactsGroupController extends Controller
 
         return $this->redirectToRoute('groups');        
     }
-    
-
 }

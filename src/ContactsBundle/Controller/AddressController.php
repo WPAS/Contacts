@@ -16,7 +16,7 @@ class AddressController extends Controller
      * @Route("/{id}/addAddress", name="address")
      * @Method("POST")
      */
-    public function addAddress(Request $request, $id)
+    public function addAddressAction(Request $request, $id)
     {        
         $address = new Address();
         $personRepository = $this->getDoctrine()->getRepository('ContactsBundle:Person');

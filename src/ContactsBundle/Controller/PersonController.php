@@ -128,7 +128,7 @@ class PersonController extends Controller
     /**
     * @Route("/{id}", name="show")
     */
-    public function show($id)
+    public function showAction($id)
     {
         $personRepository = $this->getDoctrine()->getRepository('ContactsBundle:Person');
         $person = $personRepository->find($id);
@@ -142,7 +142,7 @@ class PersonController extends Controller
     /**
      * @Route("/", name="index")
      */
-    public function all()
+    public function allAction()
     {
         $personsRepository = $this->getDoctrine()->getRepository('ContactsBundle:Person');
         $persons = $personsRepository->getAlphabetically();
@@ -150,6 +150,5 @@ class PersonController extends Controller
             throw new NotFoundHttpException('Brak wpisów');
         }
         return $this->render('ContactsBundle:Person:showAll.html.twig', ['persons' => $persons]);
-    }
-   
+    }   
 }

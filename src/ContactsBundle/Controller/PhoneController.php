@@ -15,7 +15,7 @@ class PhoneController extends Controller
      * @Route("/{id}/addPhone", name="phone")
      * @Method("POST")
      */
-    public function addPhone(Request $request, $id)
+    public function addPhoneAction(Request $request, $id)
     {        
         $phone = new Phone();
         $personRepository = $this->getDoctrine()->getRepository('ContactsBundle:Person');

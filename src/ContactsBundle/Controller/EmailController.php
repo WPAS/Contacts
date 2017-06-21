@@ -15,7 +15,7 @@ class EmailController extends Controller
      * @Route("/{id}/addEmail", name="email")
      * @Method("POST")
      */
-    public function addEmail(Request $request, $id)
+    public function addEmailAction(Request $request, $id)
     {        
         $email = new Email();
         $personRepository = $this->getDoctrine()->getRepository('ContactsBundle:Person');
@@ -60,6 +60,4 @@ class EmailController extends Controller
         
         return $this->redirectToRoute('index');        
     }
-
-
 }
